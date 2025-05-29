@@ -8,10 +8,14 @@ CREATE TABLE IF NOT EXISTS pet
  raca TEXT NOT NULL DEFAULT 'vira-lata',  
  cor TEXT NOT NULL,  
  alergias TEXT,  
- idmedicamentos INTEGER,  
- idhistorico_consultas INTEGER,  
- idvacinas INTEGER,  
- iddieta INTEGER  
+ idmedicamentos INTEGER,
+ idhistorico_consultas INTEGER,
+ idvacinas INTEGER,
+ iddieta INTEGER,
+ FOREIGN KEY(idmedicamentos) REFERENCES medicamentos(ID),
+ FOREIGN KEY(idhistorico_consultas) REFERENCES historico_consultas(ID),
+ FOREIGN KEY(idvacinas) REFERENCES vacinas(ID),
+ FOREIGN KEY(iddieta) REFERENCES dieta(ID)
 ); 
 
 CREATE TABLE usuario 
@@ -28,7 +32,9 @@ CREATE TABLE pet_usuario
 ( 
  ID_pet_usuario INTEGER PRIMARY KEY,  
  idpet INTEGER,  
- idusuario INTEGER  
+ idusuario INTEGER,
+ FOREIGN KEY(idpet) REFERENCES pet(ID),
+ FOREIGN KEY(idusuario) REFERENCES usuario(ID)
 ); 
 
 CREATE TABLE historico_consultas 
@@ -68,7 +74,9 @@ CREATE TABLE agenda_pet_usuario
 ( 
  ID INTEGER PRIMARY KEY,  
  idagenda INTEGER,  
- idpet_usuario INTEGER  
+ idpet_usuario INTEGER,
+ FOREIGN KEY(idagenda) REFERENCES agenda(ID),
+ FOREIGN KEY(idpet_usuario) REFERENCES pet_usuario(ID_pet_usuario)
 ); 
 
 CREATE TABLE dieta 
@@ -79,13 +87,3 @@ CREATE TABLE dieta
  alimentado INTEGER DEFAULT 0,  
  CHECK (alimentado IN (0, 1))
 ); 
-
--- Relações
-ALTER TABLE pet ADD FOREIGN KEY(idmedicamentos) REFERENCES medicamentos(ID);
-ALTER TABLE pet ADD FOREIGN KEY(idhistorico_consultas) REFERENCES historico_consultas(ID);
-ALTER TABLE pet ADD FOREIGN KEY(idvacinas) REFERENCES vacinas(ID);
-ALTER TABLE pet ADD FOREIGN KEY(iddieta) REFERENCES dieta(ID);
-ALTER TABLE pet_usuario ADD FOREIGN KEY(idpet) REFERENCES pet(ID);
-ALTER TABLE pet_usuario ADD FOREIGN KEY(idusuario) REFERENCES usuario(ID);
-ALTER TABLE agenda_pet_usuario ADD FOREIGN KEY(idagenda) REFERENCES agenda(ID);
-ALTER TABLE agenda_pet_usuario ADD FOREIGN KEY(idpet_usuario) REFERENCES pet_usuario(ID_pet_usuario);
