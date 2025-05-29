@@ -87,7 +87,3 @@ class Usuario:
         usuario = cursor.fetchone()
         cursor.close()
         return usuario
-    
-
-usuario = Usuario("Eduardo", "Almeida", "almeedusa@gmail.com", "123123", "Descrição do usuário")
-usuario.save()
