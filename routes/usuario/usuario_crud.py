@@ -1,5 +1,5 @@
 import sqlite3
-CONNECTION_DB = sqlite3.connect("agendapet.db")
+CONNECTION_DB = sqlite3.connect("agendapet.db", check_same_thread=False)
 
 class Usuario:
     def __init__(self, nome, sobrenome, email, senha, descricao):
